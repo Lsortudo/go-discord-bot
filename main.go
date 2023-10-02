@@ -9,10 +9,21 @@ import (
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	sess, err := discordgo.New("Bot MTE1ODQ5NDA2MjQxMjgyODc5Mg.GuXNI_.3wbEMXmgeFxLLvoFraBLHVhWQUI22-ZkG7TgXo")
+
+	// Obter o valor da variável de ambiente TOKEN
+	godotenv.Load()
+	token := os.Getenv("TOKEN")
+	if token == "" {
+		fmt.Println("A variável de ambiente TOKEN não foi configurada.")
+		return
+	}
+	fmt.Println("Valor da variável de ambiente TOKEN:", token)
+
+	sess, err := discordgo.New("Bot " + token)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +36,7 @@ func main() {
 		// if m.Content == "hellos" {
 		// 	s.ChannelMessageSend(m.ChannelID, "world!")
 		// }
-		if strings.Contains(m.Content, "!hello") {
+		if strings.Contains(m.Content, "!hellos") {
 			s.ChannelMessageSend(m.ChannelID, "world!")
 		}
 	})
