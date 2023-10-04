@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	var count int
 
 	// Obter o valor da variável de ambiente TOKEN
 	godotenv.Load()
@@ -32,12 +33,14 @@ func main() {
 		if m.Author.ID == s.State.User.ID {
 			return
 		}
-
-		// if m.Content == "hellos" {
-		// 	s.ChannelMessageSend(m.ChannelID, "world!")
-		// }
 		if strings.Contains(m.Content, "!hellos") {
 			s.ChannelMessageSend(m.ChannelID, "world!")
+			count = count + 1
+		}
+		if strings.Contains(m.Content, "!result") {
+			message := fmt.Sprintf("valor de count: %d", count)
+			count = 0
+			s.ChannelMessageSend(m.ChannelID, message)
 		}
 	})
 
